@@ -12,6 +12,22 @@ html, body {
     background-color: #edeeef;
 }
 
+.wrapper {
+    position: relative;
+    padding-bottom: 160px;
+    min-height: 100vh;
+    overflow: hidden;
+    display: block;
+}
+
+main {
+    padding-bottom: 70px;
+    padding-top: 30px;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
 .logo {
     height: 50px;
     width: 94px;
@@ -58,4 +74,32 @@ footer {
 
 .footer-logo:hover {
     background-image: url("../img/logo-footer-hover.png");
+}
+
+.question{
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 25px;
+    text-align: left;
+}
+.answers {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.answers label{
+  display: block;
+}
+button{
+    font-size: 20px;
+    background-color: #1367b6;
+    color: white;
+    border: 0px;
+    border-radius: 3px;
+    padding: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+button:hover{
+    background-color: #074a88;
 }
