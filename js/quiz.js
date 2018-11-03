@@ -94,8 +94,8 @@ const listOfQuestions = [
         answers: {
             a: "Nevím :(",
             b: "3",
-            d: "Standa má surikatu",
-            c: "Panu Jiřímu smrdí nohy"
+            c: "Standa má surikatu",
+            d: "Panu Jiřímu smrdí nohy"
         },
         correctAnswer: "d"
     },
@@ -117,7 +117,7 @@ const listOfQuestions = [
             c: "Kvantová mechanika nefunguje v makrosvětě :(",
             d: "Penny je blbá blondýna"
         },
-        correctAnswer: "d"
+        correctAnswer: "c"
     },
     {
         question: "Tak jsme na konci. Čeká tě už jen poslední zapeklitá otázka. Líbil se ti tento kvíz?",
