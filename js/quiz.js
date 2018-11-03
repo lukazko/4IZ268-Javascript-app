@@ -53,7 +53,7 @@ function showResults() {
     });
 
     // Výpis výsledku
-    resultsContainer.innerHTML = `${numCorrect} out of ${listOfQuestions.length}`;
+    resultsContainer.innerHTML = `Tvůj výsledek je: <strong>${numCorrect} správných odpovědí z ${listOfQuestions.length}</strong>`;
 
     // Vypnutí všech radiobuttonů po vyhodnocení
     var radios = document.getElementsByClassName("disableMe");
@@ -118,6 +118,46 @@ const listOfQuestions = [
             d: "Penny je blbá blondýna"
         },
         correctAnswer: "c"
+    },
+    {
+        question: "Jaké je jméno boha?",
+        answers: {
+            a: "Alláh",
+            b: "Nietzsche",
+            c: "Škromach",
+            d: "Jehova"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Který z Avengerů je nejmocnější?",
+        answers: {
+            a: "Thor",
+            b: "Hawkeye",
+            c: "Božan Drtitel",
+            d: "Ta holka z HIMYM"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Kde se nachází takzvaný ráj surferov?",
+        answers: {
+            a: "Austrálie",
+            b: "Na měsíci Europa",
+            c: "Na Bali",
+            d: "Oravská priehrada"
+        },
+        correctAnswer: "d"
+    },
+    {
+        question: "S kterou další postavou z Ulice přišel Matěj Jordán o panictví?",
+        answers: {
+            a: "S vnučkou pana Peška",
+            b: "S paní Niklovou z večerky",
+            c: "S Bedřichem Liškou, nebezpečným trestancem",
+            d: "Se ségrou Terezou"
+        },
+        correctAnswer: "a"
     },
     {
         question: "Tak jsme na konci. Čeká tě už jen poslední zapeklitá otázka. Líbil se ti tento kvíz?",
