@@ -15,7 +15,7 @@ const listOfQuestions = [
         correctAnswer: "c"
     },
     {
-        question: "Jaký je tvůj neoblíbenější kousek z merche The Boring Company?",
+        question: "Jaký je tvůj nejoblíbenější kousek z merche The Boring Company?",
         answers: {
             a: "Flamethrower",
             b: "Kšiltovka",
