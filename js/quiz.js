@@ -1,73 +1,7 @@
-// Funkce, která naplní a sestaví obsah kvízu
-function buildQuiz() {
-
-    resultsContainer.innerHTML = ``;
-    const output = [];
-
-    listOfQuestions.forEach((currentQuestion, questionNumber) => {
-        const answers = [];
-
-        for (letter in currentQuestion.answers) {
-            // Založení radio buttonů
-            answers.push(
-                `<label>
-              <input type="radio" name="question${questionNumber}" class="disableMe" value="${letter}">
-              ${letter} :
-              ${currentQuestion.answers[letter]}
-            </label>`
-            );
-        }
-
-        // Vložení otázek a odpovědí do outputu
-        output.push(
-            `<div class="question"> ${currentQuestion.question} </div>
-          <div class="answers"> ${answers.join("")} </div>`
-        );
-    });
-
-    // Vypsání do HTML dokumentu
-    quizContainer.innerHTML = output.join("");
-
-}
-
-// Funkce, která zjistí a vypíše uživatelův výsledek
-function showResults() {
-
-    // Shromáždění všech odpovědí
-    const answerContainers = quizContainer.querySelectorAll(".answers");
-    // Proměnná pro správné odpovědi
-    let numCorrect = 0;
-
-    listOfQuestions.forEach((currentQuestion, questionNumber) => {
-        // Hledání zaškrtlé otázky
-        const answerContainer = answerContainers[questionNumber];
-        const selector = `input[name=question${questionNumber}]:checked`;
-        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-        if (userAnswer === currentQuestion.correctAnswer) {
-            numCorrect++;
-            answerContainers[questionNumber].style.color = "lightgreen";
-        } else {
-            answerContainers[questionNumber].style.color = "red";
-        }
-    });
-
-    // Výpis výsledku
-    resultsContainer.innerHTML = `Tvůj výsledek je: <strong>${numCorrect} správných odpovědí z ${listOfQuestions.length}</strong>`;
-
-    // Vypnutí všech radiobuttonů po vyhodnocení
-    var radios = document.getElementsByClassName("disableMe");
-
-    for (var i = 0, iLen = radios.length; i < iLen; i++) {
-        radios[i].disabled = true;
-    };
-
-};
-
-const quizContainer = document.getElementById("quiz");
-const resultsContainer = document.getElementById("results");
-const newButton = document.getElementById("new");
-const submitButton = document.getElementById("submit");
+const quizContainer = document.querySelector('#quiz');
+const resultsContainer = document.querySelector('#results');
+const newButton = document.querySelector('#new');
+const submitButton = document.querySelector('#submit');
 
 const listOfQuestions = [
     {
@@ -171,6 +105,79 @@ const listOfQuestions = [
     }
 ];
 
+// Funkce, která naplní a sestaví obsah kvízu
+var buildQuiz = function () {
+
+    resultsContainer.innerHTML = ``;
+    const output = [];
+
+    listOfQuestions.forEach((currentQuestion, questionNumber) => {
+        const answers = [];
+
+        for (letter in currentQuestion.answers) {
+            // Založení radio buttonů
+            answers.push(
+                `<label>
+              <input type="radio" name="question${questionNumber}" class="disableMe" value="${letter}">
+              ${letter} :
+              ${currentQuestion.answers[letter]}
+            </label>`
+            );
+        }
+
+        // Vložení otázek a odpovědí do outputu
+        output.push(
+            `<div class="question"> ${currentQuestion.question} </div>
+          <div class="answers"> ${answers.join("")} </div>`
+        );
+    });
+
+    // Vypsání do HTML dokumentu
+    quizContainer.innerHTML = output.join("");
+
+}
+
+// Funkce, která zjistí a vypíše uživatelův výsledek
+var getResults = function () {
+
+    var answerContainers = quizContainer.querySelectorAll(".answers"); // Shromáždění všech odpovědí  
+    let numCorrect = 0; // Proměnná pro správné odpovědi
+
+    // Hledání zaškrtlé otázky
+    listOfQuestions.forEach((currentQuestion, questionNumber) => {
+        const answerContainer = answerContainers[questionNumber];
+        const selector = `input[name=question${questionNumber}]:checked`;
+        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+        if (userAnswer === currentQuestion.correctAnswer) {
+            numCorrect++;
+            answerContainers[questionNumber].style.color = "lightgreen";
+        }
+        else {
+            answerContainers[questionNumber].style.color = "red";
+        }
+    });
+
+    // Výpis výsledku
+    if (numCorrect >= 5) {
+        alert("Dobrá práce!\nTvůj vysledek je: " + numCorrect + " správných odpovědí z " + listOfQuestions.length);
+    }
+    else {
+        alert("Nic moc kámo...\nTvůj vysledek je: " + numCorrect + " správných odpovědí z " + listOfQuestions.length);
+    }
+
+    resultsContainer.innerHTML = 'Tvůj výsledek je: <strong>' + numCorrect + ' správných odpovědí z ' + listOfQuestions.length + '</strong>';
+    disableInputs(); // Vypnutí úprav po vyhodnocení
+};
+
+var disableInputs = function () {
+    var radios = document.querySelectorAll('.disableMe');
+
+    for (var i = 0; i < radios.length; i++) {
+        radios[i].disabled = true;
+    }
+};
+
 buildQuiz();
-submitButton.addEventListener("click", showResults);
+submitButton.addEventListener("click", getResults);
 newButton.addEventListener("click", buildQuiz);
