@@ -2,6 +2,10 @@ const quizContainer = document.querySelector('#quiz');
 const resultsContainer = document.querySelector('#results');
 const newButton = document.querySelector('#new');
 const submitButton = document.querySelector('#submit');
+const shareButton = document.querySelector('#share');
+var alertWindow = document.querySelector('.alert-window');
+var closeWindow = document.querySelectorAll('.close')[0];
+var message = document.querySelector('.alert-window-text');
 
 const listOfQuestions = [
     {
@@ -105,7 +109,6 @@ const listOfQuestions = [
     }
 ];
 
-// Funkce, která naplní a sestaví obsah kvízu
 var buildQuiz = function () {
 
     resultsContainer.innerHTML = "";
@@ -114,11 +117,10 @@ var buildQuiz = function () {
     listOfQuestions.forEach((currentQuestion, questionNumber) => {
         var answers = [];
 
-        // Založení radio buttonů s otázkami a odpovědmi
         for (letter in currentQuestion.answers) {
             answers.push(
                 `<label>
-              <input type="radio" id="question${questionNumber}" class="disableMe" value="${letter}">
+              <input type="radio" id="question${questionNumber}" name="question${questionNumber}" class="disableMe" value="${letter}">
               ${letter} :
               ${currentQuestion.answers[letter]}
             </label>`
@@ -131,22 +133,17 @@ var buildQuiz = function () {
         );
     });
 
-    // Vypsání do HTML dokumentu
     quizContainer.innerHTML = output.join("");
 }
 
-// Funkce, která zjistí a vypíše uživatelův výsledek
 var getResults = function () {
-
-    //Zabránění opakovaným alertům pro jeden výsledek
     if (resultsContainer.innerHTML) {
         return false;
     }
 
-    var answerContainers = quizContainer.querySelectorAll(".answers"); // Shromáždění všech odpovědí  
-    var nCorrect = 0; // Proměnná pro správné odpovědi
+    var answerContainers = quizContainer.querySelectorAll(".answers");
+    var nCorrect = 0;
 
-    // Hledání zaškrtlé otázky
     listOfQuestions.forEach((currentQuestion, questionNumber) => {
         var answerContainer = answerContainers[questionNumber];
         var selector = `input[id=question${questionNumber}]:checked`;
@@ -161,16 +158,17 @@ var getResults = function () {
         }
     });
 
-    // Výpis výsledku
     if (nCorrect >= 5) {
-        alert("Dobrá práce!\nTvůj vysledek je: " + nCorrect + " správných odpovědí z " + listOfQuestions.length);
+        message.innerHTML = '<h2>Dobrá práce!</h2><br> Tvůj výsledek je: <strong>' + nCorrect + ' správných odpovědí z ' + listOfQuestions.length + '</strong>';
+        alertWindow.style.display = "block";
     }
     else {
-        alert("Nic moc kámo...\nTvůj vysledek je: " + nCorrect + " správných odpovědí z " + listOfQuestions.length);
+        message.innerHTML = '<h2>Nic moc kámo...</h2><br> Tvůj výsledek je: <strong>' + nCorrect + ' správných odpovědí z ' + listOfQuestions.length + '</strong>';
+        alertWindow.style.display = "block";
     }
 
     resultsContainer.innerHTML = 'Tvůj výsledek je: <strong>' + nCorrect + ' správných odpovědí z ' + listOfQuestions.length + '</strong>';
-    disableInputs(); // Vypnutí úprav po vyhodnocení
+    disableInputs();
 };
 
 var disableInputs = function () {
@@ -181,6 +179,26 @@ var disableInputs = function () {
     }
 };
 
+var share = function () {
+    if (!resultsContainer.innerHTML) {
+        return false;
+    }
+
+    var url = "https://twitter.com/intent/tweet";
+    var text = $('#results').text();
+    var via = "lukazko";
+    var hashtag = "lukazko_quiz";
+    url = url + "?text=" + text + ";hashtags=" + hashtag + ";via=" + via;
+
+    window.open(url, "Sdílet výsledek na Twitter", "width=500,height=300");
+}
+
+closeWindow.onclick = function () {
+    alertWindow.style.display = "none";
+    message.innerHTML = "";
+}
+
 buildQuiz();
 submitButton.addEventListener("click", getResults);
 newButton.addEventListener("click", buildQuiz);
+shareButton.addEventListener("click", share);
